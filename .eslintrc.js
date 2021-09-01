@@ -1,16 +1,17 @@
 module.exports = {
   root: true,
   env: {
-    node: true
+    node: true,
   },
   extends: ["plugin:vue/essential", "@vue/airbnb"],
   parserOptions: {
-    parser: "babel-eslint"
+    parser: "babel-eslint",
   },
   rules: {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-    // "comma-dangle": ["error", "never"],
-    quotes: [2, "double"]
-  }
+    "quotes": [2, "double"],
+    "implicit-arrow-linebreak": "off",
+    "function-paren-newline": "off",
+  },
 };

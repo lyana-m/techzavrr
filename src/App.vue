@@ -10,6 +10,8 @@
         :priceFrom.sync="filterPriceFrom"
         :priceTo.sync="filterPriceTo"
         :categoryId.sync="filterCategoryId"
+        :colors="filterColors"
+        :color.sync="filterColor"
       />
 
       <section class="catalog">
@@ -38,6 +40,7 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
+      filterColor: null,
 
       page: 1,
       productsPerPage: 3,
@@ -54,14 +57,18 @@ export default {
       }
 
       if (this.filterPriceTo > 0) {
-        filteredProducts = filteredProducts.filter(
-          (product) => product.price < this.filterPriceTo,
-        );
+        filteredProducts = filteredProducts.filter((product) => product.price < this.filterPriceTo);
       }
 
       if (this.filterCategoryId) {
         filteredProducts = filteredProducts.filter(
           (product) => product.categoryId === this.filterCategoryId,
+        );
+      }
+
+      if (this.filterColor) {
+        filteredProducts = filteredProducts.filter((product) =>
+          product.colors.includes(this.filterColor),
         );
       }
 
@@ -73,6 +80,9 @@ export default {
     },
     countProducts() {
       return this.filteredProducts.length;
+    },
+    filterColors() {
+      return [...new Set(productsItems.flatMap((product) => product.colors))];
     },
   },
 };

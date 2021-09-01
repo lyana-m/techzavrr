@@ -43,19 +43,19 @@
 export default {
   model: {
     prop: "page",
-    event: "paginate"
+    event: "paginate",
   },
   props: ["page", "totalCount", "itemsPerPage"],
   methods: {
     paginate(page) {
       this.$emit("paginate", page);
-    }
+    },
   },
   computed: {
     pages() {
       return Math.ceil(this.totalCount / this.itemsPerPage);
-    }
-  }
+    },
+  },
 };
 </script>
 
