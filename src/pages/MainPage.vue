@@ -27,10 +27,10 @@
 </template>
 
 <script>
-import productsItems from "../data/products";
-import ProductList from "../components/ProductList.vue";
-import BasePagination from "../components/BasePagination.vue";
-import ProductFilter from "../components/ProductFilter.vue";
+import productsItems from '../data/products';
+import ProductList from '../components/ProductList.vue';
+import BasePagination from '../components/BasePagination.vue';
+import ProductFilter from '../components/ProductFilter.vue';
 
 export default {
   components: { ProductList, BasePagination, ProductFilter },
@@ -56,7 +56,9 @@ export default {
       }
 
       if (this.filterPriceTo > 0) {
-        filteredProducts = filteredProducts.filter((product) => product.price < this.filterPriceTo);
+        filteredProducts = filteredProducts.filter(
+          (product) => product.price < this.filterPriceTo,
+        );
       }
 
       if (this.filterCategoryId) {

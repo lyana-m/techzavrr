@@ -1,6 +1,10 @@
 <template>
   <li class="catalog__item">
-    <a class="catalog__pic" href="#" @click.prevent="goToPage('product', { id: product.id })">
+    <a
+      class="catalog__pic"
+      href="#"
+      @click.prevent="goToPage('product', { id: product.id })"
+    >
       <img :src="product.image" :alt="product.title" />
     </a>
 
@@ -23,7 +27,8 @@
             :value="color"
             v-model="selectedColor"
           />
-          <span class="colors__value" :style="{ 'background-color': color }"> </span>
+          <span class="colors__value" :style="{ 'background-color': color }">
+          </span>
         </label>
       </li>
     </ul>
@@ -31,11 +36,11 @@
 </template>
 
 <script>
-import eventBus from "../eventBus";
+import eventBus from '../eventBus';
 
 export default {
   data() {
-    return { selectedColor: "#73B6EA" };
+    return { selectedColor: '#73B6EA' };
   },
   props: {
     product: {
@@ -44,7 +49,7 @@ export default {
   },
   methods: {
     goToPage(pageName, pageParams) {
-      eventBus.$emit("goToPage", pageName, pageParams);
+      eventBus.$emit('goToPage', pageName, pageParams);
     },
   },
 };

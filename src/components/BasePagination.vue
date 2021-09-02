@@ -42,13 +42,13 @@
 <script>
 export default {
   model: {
-    prop: "page",
-    event: "paginate",
+    prop: 'page',
+    event: 'paginate',
   },
-  props: ["page", "totalCount", "itemsPerPage"],
+  props: ['page', 'totalCount', 'itemsPerPage'],
   methods: {
     paginate(page) {
-      this.$emit("paginate", page);
+      this.$emit('paginate', page);
     },
   },
   computed: {
