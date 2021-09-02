@@ -20,6 +20,7 @@
           v-model="page"
           :total-count="countProducts"
           :items-per-page="productsPerPage"
+          class="catalog__pagination"
         />
       </section>
     </div>

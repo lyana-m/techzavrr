@@ -1,5 +1,5 @@
 <template>
-  <ul class="catalog__pagination pagination">
+  <ul class="pagination">
     <li class="pagination__item">
       <a
         class="pagination__link pagination__link--arrow"
