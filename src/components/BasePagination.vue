@@ -45,7 +45,11 @@ export default {
     prop: 'page',
     event: 'paginate',
   },
-  props: ['page', 'totalCount', 'itemsPerPage'],
+  props: {
+    page: Number,
+    totalCount: Number,
+    itemsPerPage: Number,
+  },
   methods: {
     paginate(page) {
       this.$emit('paginate', page);

@@ -261,7 +261,9 @@
 
 <script>
 export default {
-  props: ['pageParams'],
+  props: {
+    pageParams: Object,
+  },
 };
 </script>
 

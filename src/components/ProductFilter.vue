@@ -190,7 +190,12 @@ export default {
       currentColor: null,
     };
   },
-  props: ['priceFrom', 'priceTo', 'categoryId', 'colors'],
+  props: {
+    priceFrom: Number,
+    priceTo: Number,
+    categoryId: Number,
+    colors: Array,
+  },
   computed: {
     categories() {
       return categories;

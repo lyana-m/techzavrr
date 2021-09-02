@@ -43,9 +43,7 @@ export default {
     return { selectedColor: '#73B6EA' };
   },
   props: {
-    product: {
-      type: Object,
-    },
+    product: Object,
   },
   methods: {
     goToPage(pageName, pageParams) {
