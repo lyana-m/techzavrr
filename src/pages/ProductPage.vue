@@ -34,7 +34,12 @@
         <span class="item__code">Артикул: {{ product.id }}</span>
         <h2 class="item__title">{{ product.title }}</h2>
         <div class="item__form">
-          <form class="form" action="#" method="POST">
+          <form
+            class="form"
+            action="#"
+            method="POST"
+            @submit.prevent="addToCart"
+          >
             <b class="item__price"> {{ product.price | numberFormat }} ₽ </b>
 
             <fieldset class="form__block">
@@ -105,15 +110,27 @@
 
             <div class="item__row">
               <div class="form__counter">
-                <button type="button" aria-label="Убрать один товар">
+                <button
+                  type="button"
+                  aria-label="Убрать один товар"
+                  @click="productAmount > 0 ? productAmount-- : productAmount"
+                >
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-minus"></use>
                   </svg>
                 </button>
 
-                <input type="text" value="1" name="count" />
+                <input
+                  type="text"
+                  name="count"
+                  v-model.number="productAmount"
+                />
 
-                <button type="button" aria-label="Добавить один товар">
+                <button
+                  type="button"
+                  aria-label="Добавить один товар"
+                  @click="productAmount++"
+                >
                   <svg width="12" height="12" fill="currentColor">
                     <use xlink:href="#icon-plus"></use>
                   </svg>
@@ -196,6 +213,11 @@ import categories from '../data/categories';
 import numberFormat from '../helpers/numberFormat';
 
 export default {
+  data() {
+    return {
+      productAmount: 1,
+    };
+  },
   filters: {
     numberFormat,
   },
@@ -207,6 +229,15 @@ export default {
       return categories.find(
         (category) => category.id === this.product.categoryId,
       );
+    },
+  },
+  methods: {
+    addToCart() {
+      this.$store.commit('addProductToCart', {
+        productId: this.product.id,
+        amount: this.productAmount,
+      });
+      this.productAmount = 1;
     },
   },
 };
