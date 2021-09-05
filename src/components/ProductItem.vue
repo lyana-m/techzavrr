@@ -18,15 +18,18 @@
     </span>
 
     <ul class="colors colors--black">
-      <li v-for="(color, i) in product.colors" :key="i" class="colors__item">
+      <li v-for="color in product.colors" :key="color.id" class="colors__item">
         <label class="colors__label">
           <input
             class="colors__radio sr-only"
             type="radio"
-            :value="color"
+            :value="color.id"
             v-model="selectedColor"
           />
-          <span class="colors__value" :style="{ 'background-color': color }">
+          <span
+            class="colors__value"
+            :style="{ 'background-color': color.code }"
+          >
           </span>
         </label>
       </li>

@@ -54,18 +54,18 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
         <ul class="colors">
-          <li v-for="color in colors" :key="color" class="colors__item">
+          <li v-for="color in colors" :key="color.id" class="colors__item">
             <label class="colors__label">
               <input
                 class="colors__radio sr-only"
                 type="radio"
                 name="color"
-                :value="color"
+                :value="color.id"
                 v-model="currentColor"
               />
               <span
                 class="colors__value"
-                :style="{ 'background-color': color }"
+                :style="{ 'background-color': color.code }"
               >
               </span>
             </label>
@@ -179,7 +179,8 @@
 </template>
 
 <script>
-import categories from '../data/categories';
+import axios from 'axios';
+import API_BASE_URL from '../config';
 
 export default {
   data() {
@@ -188,17 +189,22 @@ export default {
       currentPriceTo: 0,
       currentCategoryId: 0,
       currentColor: null,
+
+      categoriesData: null,
+      colorsData: null,
     };
   },
   props: {
     priceFrom: Number,
     priceTo: Number,
     categoryId: Number,
-    colors: Array,
   },
   computed: {
     categories() {
-      return categories;
+      return this.categoriesData ? this.categoriesData.items : [];
+    },
+    colors() {
+      return this.colorsData ? this.colorsData.items : [];
     },
   },
   watch: {
@@ -228,6 +234,20 @@ export default {
       this.$emit('update:categoryId', 0);
       this.$emit('update:color', null);
     },
+    loadCategories() {
+      axios.get(`${API_BASE_URL}/api/productCategories`).then((response) => {
+        this.categoriesData = response.data;
+      });
+    },
+    loadColors() {
+      axios.get(`${API_BASE_URL}/api/colors`).then((response) => {
+        this.colorsData = response.data;
+      });
+    },
+  },
+  created() {
+    this.loadCategories();
+    this.loadColors();
   },
 };
 </script>
