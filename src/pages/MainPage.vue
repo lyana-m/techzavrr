@@ -13,7 +13,8 @@
         :color.sync="filterColor"
       />
 
-      <section class="catalog">
+      <section class="catalog" style="position: relative">
+        <BasePreloader v-if="isLoading" />
         <ProductList :products="products" />
         <BasePagination
           v-model="page"
@@ -31,10 +32,16 @@ import axios from 'axios';
 import ProductList from '../components/ProductList.vue';
 import BasePagination from '../components/BasePagination.vue';
 import ProductFilter from '../components/ProductFilter.vue';
+import BasePreloader from '../components/BasePreloader.vue';
 import API_BASE_URL from '../config';
 
 export default {
-  components: { ProductList, BasePagination, ProductFilter },
+  components: {
+    ProductList,
+    BasePagination,
+    ProductFilter,
+    BasePreloader,
+  },
   data() {
     return {
       filterPriceFrom: 0,
@@ -45,6 +52,8 @@ export default {
       page: 1,
       productsPerPage: 3,
       productsData: null,
+
+      isLoading: false,
     };
   },
   computed: {
@@ -62,6 +71,7 @@ export default {
   },
   methods: {
     loadProducts() {
+      this.isLoading = true;
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer = setTimeout(() => {
         axios
@@ -77,7 +87,8 @@ export default {
           })
           .then((response) => {
             this.productsData = response.data;
-          });
+          })
+          .then((this.isLoading = false));
       }, 0);
     },
   },
