@@ -15,6 +15,13 @@
 
       <section class="catalog" style="position: relative">
         <BasePreloader v-if="isLoading" />
+        <div v-if="isLoadingFailed">
+          При загрузке данных произошла ошибка
+          <button class="button button--primery" @click="loadProducts">
+            Попробовать еще раз
+          </button>
+        </div>
+
         <ProductList :products="products" />
         <BasePagination
           v-model="page"
@@ -54,6 +61,7 @@ export default {
       productsData: null,
 
       isLoading: false,
+      isLoadingFailed: false,
     };
   },
   computed: {
@@ -72,6 +80,7 @@ export default {
   methods: {
     loadProducts() {
       this.isLoading = true;
+      this.isLoadingFailed = false;
       clearTimeout(this.loadProductsTimer);
       this.loadProductsTimer = setTimeout(() => {
         axios
@@ -88,7 +97,12 @@ export default {
           .then((response) => {
             this.productsData = response.data;
           })
-          .then((this.isLoading = false));
+          .catch(() => {
+            this.isLoadingFailed = true;
+          })
+          .then(() => {
+            this.isLoading = false;
+          });
       }, 0);
     },
   },
@@ -115,5 +129,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.button--primery {
+  display: block;
+  margin-top: 20px;
+}
+.button--primery:not(:disabled):focus,
+.button--primery:not(:disabled):hover {
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #000;
+}
 </style>
