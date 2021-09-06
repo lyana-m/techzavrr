@@ -15,12 +15,7 @@
 
       <section class="catalog" style="position: relative">
         <BasePreloader v-if="isLoading" />
-        <div v-if="isLoadingFailed">
-          При загрузке данных произошла ошибка
-          <button class="button button--primery" @click="loadProducts">
-            Попробовать еще раз
-          </button>
-        </div>
+        <BaseLoadingError v-if="isLoadingFailed" @retry="loadProducts" />
 
         <ProductList :products="products" />
         <BasePagination
@@ -40,6 +35,7 @@ import ProductList from '../components/ProductList.vue';
 import BasePagination from '../components/BasePagination.vue';
 import ProductFilter from '../components/ProductFilter.vue';
 import BasePreloader from '../components/BasePreloader.vue';
+import BaseLoadingError from '../components/BaseLoadingError.vue';
 import API_BASE_URL from '../config';
 
 export default {
@@ -48,6 +44,7 @@ export default {
     BasePagination,
     ProductFilter,
     BasePreloader,
+    BaseLoadingError,
   },
   data() {
     return {
@@ -129,15 +126,5 @@ export default {
 };
 </script>
 
-<style scoped>
-.button--primery {
-  display: block;
-  margin-top: 20px;
-}
-.button--primery:not(:disabled):focus,
-.button--primery:not(:disabled):hover {
-  background-color: #000;
-  color: #fff;
-  border: 1px solid #000;
-}
+<style>
 </style>
