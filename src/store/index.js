@@ -33,6 +33,10 @@ export default new Vuex.Store({
         amount: item.quantity,
       }));
     },
+    resetCart(state) {
+      state.cartProductsData = [];
+      state.cartProducts = [];
+    },
   },
   getters: {
     cartDetailProducts(state) {
