@@ -126,27 +126,13 @@
           </div>
         </div>
 
-        <div class="cart__block">
-          <ul class="cart__orders">
-            <OrderItem
-              v-for="product in products"
-              :key="product.id"
-              :product="product"
-            />
-          </ul>
+        <OrderList
+          :products="products"
+          :totalAmount="totalAmount"
+          :totalPrice="totalPrice"
+          :isCart="true"
+        />
 
-          <div class="cart__total">
-            <p>Доставка: <b>0 ₽</b></p>
-            <p>
-              Итого: <b>{{ totalAmount }}</b> товара на сумму
-              <b>{{ totalPrice | numberFormat }} ₽</b>
-            </p>
-          </div>
-
-          <button class="cart__button button button--primery" type="submit">
-            Оформить заказ
-          </button>
-        </div>
         <div v-if="formErrorMessage" class="cart__error form__error-block">
           <h4>Заявка не отправлена!</h4>
           <p>
@@ -159,11 +145,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import axios from 'axios';
 import BaseFormText from '../components/BaseFormText.vue';
 import BaseFormTextarea from '../components/BaseFormTextarea.vue';
-import OrderItem from '../components/OrderItem.vue';
+import OrderList from '../components/OrderList.vue';
 import numberFormat from '../helpers/numberFormat';
 import API_BASE_URL from '../config';
 
@@ -175,11 +161,12 @@ export default {
       formErrorMessage: '',
     };
   },
-  components: { BaseFormText, BaseFormTextarea, OrderItem },
+  components: { BaseFormText, BaseFormTextarea, OrderList },
   filters: {
     numberFormat,
   },
   methods: {
+    ...mapMutations(['resetCart', 'updateOrderInfo']),
     order() {
       this.formError = {};
       this.formErrorMessage = '';
@@ -196,8 +183,13 @@ export default {
             },
           },
         )
-        .then(() => {
-          this.$store.commit('resetCart');
+        .then((response) => {
+          this.resetCart();
+          this.updateOrderInfo(response.data);
+          this.$router.push({
+            name: 'orderInfo',
+            params: { id: response.data.id },
+          });
           this.formData = {};
         })
         .catch((error) => {
