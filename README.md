@@ -1,24 +1,17 @@
-# online-shop
+# Techzavrr
+### Описание проекта:
+Онлайн-магазин техники 
 
-## Project setup
-```
-npm install
-```
+### Используемые технологии:
+- JavaScript
+- Vue
+- Vue-Router
+- Vuex
+- Webpack
+- Eslint
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Посмотреть проект можно по [ссылке](https://lyana-m.github.io/online-shop/ "ссылке").
 
-### Compiles and minifies for production
-```
-npm run build
-```
+------------
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+###### **Функционал приложения дорабатывается (На данный момент реализовано добавление товара в корзину, оформление заказа, фильтрация товаров по нескольким критериям)*
